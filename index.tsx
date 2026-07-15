@@ -17,7 +17,7 @@ import { useLibrary } from '@/context/LibraryContext';
 import { CATEGORIES } from '@/constants/categories';
 import { VideoCard } from '@/components/VideoCard';
 import { EmptyState, FilterChip } from '@/components/ui';
-import { AssistantBar } from '@/components/AssistantBar';
+import { FloatingChatButton } from '@/components/FloatingChatButton';
 
 export default function LibraryScreen() {
   const colors = useColors();
@@ -110,7 +110,7 @@ export default function LibraryScreen() {
                 videos.length === 0
                   ? scanning
                     ? 'Dein Ordner wird gerade gescannt …'
-                    : 'Gehe zu „Scan“ und tippe auf „Jetzt scannen“, um deinen Ordner einzulesen.'
+                    : 'Gehe zu „Scan" und tippe auf „Jetzt scannen", um deinen Ordner einzulesen.'
                   : 'Passe deine Suche oder Filter an.'
               }
               actionLabel={videos.length === 0 && !scanning ? 'Zum Scan' : undefined}
@@ -120,7 +120,7 @@ export default function LibraryScreen() {
             <FlatList
               data={filteredVideos}
               keyExtractor={(item) => item.id}
-              contentContainerStyle={[styles.list, { paddingBottom: insets.bottom + 140 }]}
+              contentContainerStyle={[styles.list, { paddingBottom: insets.bottom + 100 }]}
               ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
               renderItem={({ item }) => (
                 <VideoCard video={item} onPress={() => router.push(`/video/${item.id}`)} />
@@ -141,11 +141,11 @@ export default function LibraryScreen() {
       {videos.length > 0 ? (
         <View
           style={[
-            styles.assistantWrap,
-            { bottom: insets.bottom + (Platform.OS === 'web' ? 84 : 62) },
+            styles.fabContainer,
+            { bottom: insets.bottom + 16, right: 16 },
           ]}
         >
-          <AssistantBar />
+          <FloatingChatButton />
         </View>
       ) : null}
     </View>
@@ -172,9 +172,7 @@ const styles = StyleSheet.create({
   clearRow: { paddingHorizontal: 20, paddingTop: 8 },
   clearText: { fontSize: 13, fontWeight: '700' },
   list: { padding: 20, paddingTop: 12 },
-  assistantWrap: {
+  fabContainer: {
     position: 'absolute',
-    left: 0,
-    right: 0,
   },
 });
