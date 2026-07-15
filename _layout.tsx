@@ -7,6 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { SettingsProvider } from '@/context/SettingsContext';
 import { LibraryProvider } from '@/context/LibraryContext';
+import { ChatProvider } from '@/context/ChatContext';
 import { setBaseUrl } from '@workspace/api-client-react';
 import {
   Inter_400Regular,
@@ -73,11 +74,13 @@ export default function RootLayout() {
         <ErrorBoundary>
           <QueryClientProvider client={queryClient}>
             <LibraryProvider>
-              <GestureHandlerRootView>
-                <KeyboardProvider>
-                  <RootLayoutNav />
-                </KeyboardProvider>
-              </GestureHandlerRootView>
+              <ChatProvider>
+                <GestureHandlerRootView>
+                  <KeyboardProvider>
+                    <RootLayoutNav />
+                  </KeyboardProvider>
+                </GestureHandlerRootView>
+              </ChatProvider>
             </LibraryProvider>
           </QueryClientProvider>
         </ErrorBoundary>
